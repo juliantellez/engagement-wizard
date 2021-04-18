@@ -11,6 +11,7 @@ interface CreateFollowStreamInput {
   }
   token: string
   url: string
+  onError?: (e: Error) => void
 }
 
 export interface User {
@@ -35,6 +36,7 @@ const createFollowStream = ({
   url,
   params,
   token,
+  onError = (e) => console.log(e),
 }: CreateFollowStreamInput): Observable<CreateFollowStreamOutput> => {
   const urlParams = new URLSearchParams()
   urlParams.set('max_results', String(params.maxResults))
@@ -69,9 +71,11 @@ const createFollowStream = ({
       }
 
       if (!response.data) {
-        throw new Error(JSON.stringify(response))
+        throw new Error('NO DATA' + JSON.stringify(response))
       }
-
+      return response
+    }),
+    map((response) => {
       return {
         data: response.data,
         ...(response.meta && {
@@ -83,7 +87,7 @@ const createFollowStream = ({
       }
     }),
     catchError((e) => {
-      console.log(e)
+      onError(e)
       return EMPTY
     })
   )

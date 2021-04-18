@@ -1,11 +1,17 @@
 const BASE_URL = 'https://api.twitter.com'
 
 const dictionary = {
-  user: {
-    following: (userId: string): string =>
+  follows: {
+    getFollowing: (userId: string): string =>
       `${BASE_URL}/2/users/${userId}/following`,
-    followers: (userId: string): string =>
+    getFollowers: (userId: string): string =>
       `${BASE_URL}/2/users/${userId}/followers`,
+    deleteFollow: (sourceUserId: string, targetUserId: string): string =>
+      `${BASE_URL}/2/users/${sourceUserId}/following/${targetUserId}`,
+  },
+  user: {
+    getByUserName: (userName: string): string =>
+      `${BASE_URL}/2/users/by/username/${userName}`,
   },
 }
 

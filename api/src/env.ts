@@ -2,8 +2,8 @@ const env = {
   api: {
     timeOut: 3000,
     retry: 3,
-    retryDelay: 1000,
-    maxResults: 500,
+    retryDelay: 60000 * 15, // 15 min
+    maxResults: 10,
   },
 }
 
